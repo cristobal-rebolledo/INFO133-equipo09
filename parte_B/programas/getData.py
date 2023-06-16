@@ -10,6 +10,8 @@ datosComuna = []
 datosTener = []
 datosBienestar = []
 
+#aqui se deben conseguir los datos del bienestar de los sitios web 
+
 # Ruta y nombre del archivo CSV
 Pais = 'INFO133-equipo09\parte_B\datos\Pais.csv'
 Region = 'INFO133-equipo09\parte_B\datos\Region.csv'
