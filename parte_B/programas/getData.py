@@ -1,5 +1,6 @@
 import csv
 
+
 # Datos que deseas escribir en el archivo CSV
 datosPais = [
     ["Chile","1"],
@@ -11,6 +12,7 @@ datosTener = []
 datosBienestar = []
 
 #aqui se deben conseguir los datos del bienestar de los sitios web 
+
 
 # Ruta y nombre del archivo CSV
 Pais = 'INFO133-equipo09\parte_B\datos\Pais.csv'
