@@ -25,13 +25,13 @@ def importar_csv(nombre_archivo, nombre_tabla):
         columnas = ','.join(cabecera)
 
         valores = ""
-        #print(cabecera)
+        print(cabecera)
         #aqui se debe rellenar
         for linea in reader:
             #valores = ','.join(linea)
             valores = ','.join([f"'{v}'" if isinstance(v, str) else str(v) for v in linea])
             consulta = f"INSERT INTO {nombre_tabla} ({columnas}) VALUES ({valores});"
-            #print(consulta)
+            print(consulta)
             cursor.execute(consulta)
 
         conn.commit()
@@ -39,6 +39,7 @@ def importar_csv(nombre_archivo, nombre_tabla):
 # Ejemplo de importación para un archivo CSV y una tabla específica
 importar_csv("../datos/Pais.csv", "Pais")
 importar_csv("../datos/Region.csv", "Region")
+importar_csv("../datos/Comuna.csv","Comuna")
 
 conn.close()
 
