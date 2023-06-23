@@ -1,0 +1,5 @@
+PK_NOMBRE_INDICADOR,Descripcion,Categoria
+Cantidad de Establecimientos Educativos,Esta variable mide la cantidad de establecimientos educacionales por comuna,Educacion
+Cantidad de Centros Medicos,Esta variable mide la cantidad de centros medicos por comuna,Salud
+Tasa de DMCS,"Permite acceder a un reporte estadístico por comuna de los Delitos de Mayor Connotación Social (DMCS), como: homicidio, lesiones, violación, robo con fuerza y robo con violencia, por cada 100 mil habitantes",Seguridad
+Cantidad de Estadios,Esta variable mide la cantidad de estadios por comuna,Entretencion

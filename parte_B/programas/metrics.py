@@ -37,9 +37,10 @@ def importar_csv(nombre_archivo, nombre_tabla):
         conn.commit()
 
 # Ejemplo de importación para un archivo CSV y una tabla específica
-importar_csv("../datos/Pais.csv", "Pais")
-importar_csv("../datos/Region.csv", "Region")
-importar_csv("../datos/Comuna.csv","Comuna")
+#importar_csv("../datos/Pais.csv", "Pais")
+#importar_csv("../datos/Region.csv", "Region")
+#importar_csv("../datos/Comuna.csv","Comuna")
+importar_csv("../datos/Bienestar.csv","Bienestar")
 
 conn.close()
 
