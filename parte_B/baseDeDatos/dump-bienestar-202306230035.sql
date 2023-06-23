@@ -19,6 +19,9 @@
 -- Table structure for table `bienestar`
 --
 
+create database bienestar;
+use bienestar;
+
 DROP TABLE IF EXISTS `bienestar`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
