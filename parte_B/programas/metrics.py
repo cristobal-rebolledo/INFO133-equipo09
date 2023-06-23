@@ -46,8 +46,11 @@ def importar_csv1(nombre_archivo, nombre_tabla,Nombre_Indicador):
         print(cabecera)
         for linea in archivo:
             valores = ','.join([f"'{v.strip()}'" if isinstance(v, str) else str(v.strip()) for v in linea.rstrip().split(";")])
-            consulta = f"INSERT INTO {nombre_tabla} ({columnas}) VALUES ({valores});"
+            valores = valores.rstrip("''")
+            consulta = f"INSERT INTO {nombre_tabla} ({columnas}FK_NOMBRE_INDICADOR) VALUES ({valores}'{Nombre_Indicador}');"
             print(consulta)
+            #cursor.execute(consulta)
+        #conn.commit()
 
 # Ejemplo de importación para un archivo CSV y una tabla específica
 #importar_csv("../datos/Pais.csv", "Pais")
