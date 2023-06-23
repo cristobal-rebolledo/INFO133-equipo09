@@ -30,7 +30,7 @@ def importar_csv(nombre_archivo, nombre_tabla):
         for linea in reader:
             #valores = ','.join(linea)
             valores = ','.join([f"'{v}'" if isinstance(v, str) else str(v) for v in linea])
-            consulta = f"INSERT INTO {nombre_tabla} ({columnas}) VALUES ({valores});"
+            consulta = f"INSERT IGNORE INTO {nombre_tabla} ({columnas}) VALUES ({valores});"
             #print(consulta)
             cursor.execute(consulta)
 
@@ -53,6 +53,7 @@ def importar_csv1(nombre_archivo, nombre_tabla,Nombre_Indicador):
             print(consulta)
             cursor.execute(consulta)
         conn.commit()
+
 def importar_csv2(nombre_archivo, nombre_tabla,Nombre_Indicador):
     consulta = f"use bienestar;"
     cursor.execute(consulta)
@@ -69,6 +70,27 @@ def importar_csv2(nombre_archivo, nombre_tabla,Nombre_Indicador):
             print(consulta)
             cursor.execute(consulta)
         conn.commit()
+        
+def importar_csv3(nombre_archivo, nombre_tabla,nombre_indicador):
+    consulta = f"use bienestar;"
+    cursor.execute(consulta)
+    with open(nombre_archivo, 'r', encoding='utf-8-sig') as archivo:
+        reader = csv.reader(archivo)
+        cabecera = next(reader)  # Lee la primera línea como la cabecera de las columnas
+        columnas = ','.join(cabecera)
+
+        valores = ""
+        print(cabecera)
+        #aqui se debe rellenar
+        for linea in reader:
+            #valores = ','.join(linea)
+            valores = ','.join([f"'{v}'" if isinstance(v, str) else str(v) for v in linea])
+            consulta = f"INSERT IGNORE INTO {nombre_tabla} ({columnas},FK_NOMBRE_INDICADOR) VALUES ({valores},'{nombre_indicador}');"
+            print(consulta)
+            cursor.execute(consulta)
+
+        conn.commit()
+
 
 # Ejemplo de importación para un archivo CSV y una tabla específica
 #importar_csv("../datos/Pais.csv", "Pais")
@@ -77,9 +99,9 @@ def importar_csv2(nombre_archivo, nombre_tabla,Nombre_Indicador):
 #importar_csv("../datos/Bienestar.csv","Bienestar")
 
 #importar_csv2("../datos/Salud_salida.csv","CentrosMedicos","Cantidad de centros medicos")
-#importar_csv1("../datos/DMCS_Tasa_Salida.csv","Tener")
+importar_csv3("../datos/DMCS_Tasa_Salida.csv","DMCS","Tasa de DMCS")
 #importar_csv1("../datos/estadios_Salida_SIN_TILDES.csv","Estadios","Cantidad de estadios")
-importar_csv2("../datos/planesYProgramas_Salida.csv","Escuelas","Cantidad de establecimientos educativos")
+#importar_csv2("../datos/planesYProgramas_Salida.csv","Escuelas","Cantidad de establecimientos educativos")
 
 conn.close()
 
