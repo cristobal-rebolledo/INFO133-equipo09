@@ -32,3 +32,24 @@ FK_NOMBRE_INDICADOR varchar(100),
 foreign key (FK_NOMBRE_COMUNA) references Comuna(PK_NOMBRE_COMUNA),
 foreign key (FK_NOMBRE_INDICADOR) references Bienestar(PK_NOMBRE_INDICADOR)
 );
+
+create table if not exists Estadios(
+    PK_NOMBRE_ESTADIO varchar(100) primary key,
+    FK_COMUNA varchar(100),
+    FK_NOMBRE_INDICADOR varchar(100),
+    foreign key (FK_NOMBRE_INDICADOR) references Bienestar(PK_NOMBRE_INDICADOR)
+)
+
+create table if not exists CentrosMedicos(
+    PK_NOMBRE_CENTRO varchar(100) primary key,
+    FK_COMUNA varchar(100),
+    FK_NOMBRE_INDICADOR varchar(100),
+    foreign key (FK_NOMBRE_INDICADOR) references Bienestar(PK_NOMBRE_INDICADOR)
+)
+
+create table if not exists Escuelas(
+    PK_NOMBRE_ESCUELA varchar(100) primary key,
+    FK_COMUNA varchar(100),
+    FK_NOMBRE_INDICADOR varchar(100),
+    foreign key (FK_NOMBRE_INDICADOR) references Bienestar(PK_NOMBRE_INDICADOR)
+)
