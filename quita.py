@@ -1,3 +1,4 @@
+
 import unicodedata
 import codecs
 
@@ -9,4 +10,9 @@ text = "".join(file.readlines())
 output = codecs.open("DMCS_Tasa_Salida.csv","w","utf-8-sig")
 output.write(remove_accents(text))
 file.close()
-output.close()
+
+file = codecs.open("estadios_Salida.csv","r","utf-8-sig")
+text = "".join(file.readlines())
+output = codecs.open("estadios_Salida_SIN_TILDES.csv","w","utf-8-sig")
+output.write(remove_accents(text))
+file.close()
