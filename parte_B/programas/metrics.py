@@ -1,7 +1,7 @@
 import sys
 import pymysql
 import csv
-from unidecode import unidecode
+
 
 try:
     conn = pymysql.connect(
@@ -98,7 +98,7 @@ def importar_indicadores(nombre_archivo,nombre_tabla):
             nombre_comuna = datos[1]
     
             # Obtener el ID de la comuna
-            id_comuna = obtener_id_comuna(unidecode(nombre_comuna))
+            id_comuna = obtener_id_comuna(nombre_comuna)
                 
             if id_comuna:
                 # Insertar los datos en la tabla nombre_tabla

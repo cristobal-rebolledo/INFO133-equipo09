@@ -42,4 +42,3 @@ create table if not exists Escuelas(
     FK_ID_COMUNA smallint (6),
     foreign key (FK_ID_COMUNA) references COMUNA(PK_ID_COMUNA)
 );
-
