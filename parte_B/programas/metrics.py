@@ -79,7 +79,6 @@ def obtener_id_comuna(nombre_comuna):
         id_comuna = resultado[0]
         return id_comuna
     else:
-        print(nombre_comuna)
         return None
 
 def importar_indicadores(nombre_archivo,nombre_tabla):
@@ -103,10 +102,31 @@ def importar_indicadores(nombre_archivo,nombre_tabla):
                 
             if id_comuna:
                 # Insertar los datos en la tabla nombre_tabla
-                consulta = f"INSERT IGNORE INTO {nombre_tabla} ({columnas}) VALUES ('{nombre_centro}', {id_comuna})"
+                consulta = f"INSERT INTO {nombre_tabla} ({columnas}) VALUES ('{nombre_centro}', {id_comuna})"
                 cursor.execute(consulta)
                 conn.commit()
 
+def importar_escuelas(nombre_archivo,nombre_tabla):
+    consulta = f"use bienestar;"
+    cursor.execute(consulta)
+    with open(nombre_archivo, 'r', encoding='utf-8-sig') as archivo:
+        
+        cabecera = archivo.readline().rstrip().split(";")
+        columnas = ','.join(cabecera)
+        #print(columnas)
+        #print(cabecera)
+        for linea in archivo:
+            linea = linea.replace("'","")
+            linea =linea.replace('"','')
+            datos = linea.strip().split(';')
+            nombre_centro = datos[0]
+            id_comuna = datos[1]
+                
+            
+            # Insertar los datos en la tabla nombre_tabla
+            consulta = f"INSERT INTO {nombre_tabla} ({columnas}) VALUES ('{nombre_centro}', {id_comuna})"
+            cursor.execute(consulta)
+            conn.commit()
 # Ejemplo de importación para un archivo CSV y una tabla específica
 
 importar_comunas_region_csv("../datos/datosComunas.csv")
@@ -118,7 +138,7 @@ importar_DMSC("../datos/DMCS_Tasa_Salida.csv")
 
 importar_indicadores("../datos/Salud_salida.csv","CentrosMedicos")
 importar_indicadores("../datos/estadios_Salida_SIN_TILDES.csv","Estadios")
-importar_indicadores("../datos/planesYProgramas_Salida.csv","Escuelas")
+importar_escuelas("../datos/planesYProgramas_Salida.csv","Escuelas")
 
 conn.close()
 
