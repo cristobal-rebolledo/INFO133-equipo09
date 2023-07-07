@@ -18,3 +18,4 @@ Componentes:
 	- Documento: Contiene los archivos docx y pdf que se explican detalladamente los objetivos y metodos de la tarea.
 	- Programas: Contiene multiples archivos de python dedicados a procesar o cargar datos.
 	- sql: Contiene el script SQL usado para crear las tablas de la base de datos.
+	- output: Contenido de las tablas de salida que muestran los puntajes de las comunas segun sus indicadores de bienestar
