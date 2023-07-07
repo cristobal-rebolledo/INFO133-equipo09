@@ -42,3 +42,11 @@ create table if not exists Escuelas(
     FK_ID_COMUNA smallint (6),
     foreign key (FK_ID_COMUNA) references COMUNA(PK_ID_COMUNA)
 );
+create table if not exists BienestarComunal(
+	FK_ID_COMUNA smallint (6) primary key,
+	VAR1  smallINT DEFAULT 0,
+	VAR2 smallINT DEFAULT 0,
+	VAR3 smallINT DEFAULT 0,
+	TOTAL smallint default 0,
+	foreign key (FK_ID_COMUNA) references COMUNA(PK_ID_COMUNA)
+	);
