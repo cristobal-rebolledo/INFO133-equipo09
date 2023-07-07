@@ -25,7 +25,7 @@ def importar_csv(nombre_archivo, nombre_tabla):
         columnas = ','.join(cabecera)
 
         valores = ""
-        print(cabecera)
+        #print(cabecera)
         #aqui se debe rellenar
         for linea in reader:
             #valores = ','.join(linea)
@@ -42,15 +42,15 @@ def importar_csv1(nombre_archivo, nombre_tabla,Nombre_Indicador):
     with open(nombre_archivo, 'r', encoding='utf-8-sig') as archivo:
         cabecera = archivo.readline().rstrip().split(";")
         columnas = ','.join(cabecera)
-        print(columnas)
-        print(cabecera)
+        #print(columnas)
+        #print(cabecera)
         for linea in archivo:
             linea = linea.replace("'","")
             linea = linea.replace('"','')
             valores = ','.join([f"'{v.strip()}'" if isinstance(v, str) else str(v.strip()) for v in linea.rstrip().split(";")])
             valores = valores.rstrip("'")
             consulta = f"INSERT IGNORE INTO {nombre_tabla} ({columnas}FK_NOMBRE_INDICADOR) VALUES ({valores}'{Nombre_Indicador}');"
-            print(consulta)
+            #print(consulta)
             cursor.execute(consulta)
         conn.commit()
 
@@ -60,14 +60,14 @@ def importar_csv2(nombre_archivo, nombre_tabla,Nombre_Indicador):
     with open(nombre_archivo, 'r', encoding='utf-8-sig') as archivo:
         cabecera = archivo.readline().rstrip().split(";")
         columnas = ','.join(cabecera)
-        print(columnas)
-        print(cabecera)
+        #print(columnas)
+        #print(cabecera)
         for linea in archivo:
             linea = linea.replace("'","")
             linea =linea.replace('"','')
             valores = ','.join([f"'{v.strip()}'" if isinstance(v, str) else str(v.strip()) for v in linea.rstrip().split(";")])
             consulta = f"INSERT IGNORE INTO {nombre_tabla} ({columnas},FK_NOMBRE_INDICADOR) VALUES ({valores},'{Nombre_Indicador}');"
-            print(consulta)
+            #print(consulta)
             cursor.execute(consulta)
         conn.commit()
         
@@ -80,26 +80,58 @@ def importar_csv3(nombre_archivo, nombre_tabla,nombre_indicador):
         columnas = ','.join(cabecera)
 
         valores = ""
-        print(cabecera)
+        #print(cabecera)
         #aqui se debe rellenar
         for linea in reader:
             #valores = ','.join(linea)
             valores = ','.join([f"'{v}'" if isinstance(v, str) else str(v) for v in linea])
             consulta = f"INSERT IGNORE INTO {nombre_tabla} ({columnas},FK_NOMBRE_INDICADOR) VALUES ({valores},'{nombre_indicador}');"
-            print(consulta)
+            #print(consulta)
             cursor.execute(consulta)
 
         conn.commit()
+
+def importar_comunas_region_csv(nombre_archivo):
+    consulta = f"use bienestar;"
+    cursor.execute(consulta)
+    # Leer los datos desde el archivo de texto
+    with open(nombre_archivo, 'r', encoding='utf-8-sig') as archivo:
+        consulta_pais = f"INSERT INTO Pais(PK_ID_PAIS, Nombre_Pais) VALUES (1,'Chile');"
+        cursor.execute(consulta_pais)
+        for linea in archivo:
+            linea = linea.replace("'","")
+            linea =linea.replace('"','')
+            datos = linea.rstrip().split(",")
+
+            # Insertar en la tabla Region
+            id_region = int(datos[1])
+            nombre_region = datos[0]
+            consulta_region = f"INSERT IGNORE INTO Region (Nombre_Region, PK_ID_Region,FK_ID_PAIS) VALUES ('{nombre_region}', {id_region},1);"
+            cursor.execute(consulta_region)
+
+            # Insertar en la tabla Comuna
+            id_comuna = int(datos[3])
+            nombre_comuna = datos[2]
+            poblacion = int(datos[4])
+            id_region_comuna = int(datos[1])
+            consulta_comuna = f"INSERT IGNORE INTO Comuna (PK_ID_Comuna, Nombre_Comuna, Poblacion, FK_ID_Region) VALUES ({id_comuna}, '{nombre_comuna}', {poblacion}, {id_region_comuna});"
+            cursor.execute(consulta_comuna)
+
+    # Confirmar los cambios y cerrar la conexión
+    conn.commit()
+
+
 
 
 # Ejemplo de importación para un archivo CSV y una tabla específica
 #importar_csv("../datos/Pais.csv", "Pais")
 #importar_csv("../datos/Region.csv", "Region")
 #importar_csv("../datos/Comuna.csv","Comuna")
+importar_comunas_region_csv("../datos/datosComunas.csv")
 #importar_csv("../datos/Bienestar.csv","Bienestar")
 
 #importar_csv2("../datos/Salud_salida.csv","CentrosMedicos","Cantidad de centros medicos")
-importar_csv3("../datos/DMCS_Tasa_Salida.csv","DMCS","Tasa de DMCS")
+#importar_csv3("../datos/DMCS_Tasa_Salida.csv","DMCS","Tasa de DMCS")
 #importar_csv1("../datos/estadios_Salida_SIN_TILDES.csv","Estadios","Cantidad de estadios")
 #importar_csv2("../datos/planesYProgramas_Salida.csv","Escuelas","Cantidad de establecimientos educativos")
 
