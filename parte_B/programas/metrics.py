@@ -1,6 +1,7 @@
 import sys
 import pymysql
 import csv
+from unidecode import unidecode
 
 try:
     conn = pymysql.connect(
@@ -67,7 +68,7 @@ def importar_DMSC(nombre_archivo):
 
 def obtener_id_comuna(nombre_comuna):
     # Consulta para obtener el ID de la comuna
-    consulta = f"SELECT PK_ID_Comuna FROM Comuna WHERE Nombre_Comuna = '{nombre_comuna}'"
+    consulta = f"SELECT PK_ID_Comuna FROM Comuna WHERE Nombre_Comuna LIKE '{nombre_comuna}'"
     cursor.execute(consulta)
     
     # Obtener el primer resultado de la consulta
@@ -78,6 +79,7 @@ def obtener_id_comuna(nombre_comuna):
         id_comuna = resultado[0]
         return id_comuna
     else:
+        print(nombre_comuna)
         return None
 
 def importar_indicadores(nombre_archivo,nombre_tabla):
@@ -95,14 +97,13 @@ def importar_indicadores(nombre_archivo,nombre_tabla):
             datos = linea.strip().split(';')
             nombre_centro = datos[0]
             nombre_comuna = datos[1]
-                
+    
             # Obtener el ID de la comuna
-            id_comuna = obtener_id_comuna(nombre_comuna)
+            id_comuna = obtener_id_comuna(unidecode(nombre_comuna))
                 
             if id_comuna:
                 # Insertar los datos en la tabla nombre_tabla
                 consulta = f"INSERT IGNORE INTO {nombre_tabla} ({columnas}) VALUES ('{nombre_centro}', {id_comuna})"
-                print(consulta)
                 cursor.execute(consulta)
                 conn.commit()
 
@@ -111,6 +112,8 @@ def importar_indicadores(nombre_archivo,nombre_tabla):
 importar_comunas_region_csv("../datos/datosComunas.csv")
 
 importar_DMSC("../datos/DMCS_Tasa_Salida.csv")
+
+
 
 
 importar_indicadores("../datos/Salud_salida.csv","CentrosMedicos")
